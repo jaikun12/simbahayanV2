@@ -1,47 +1,49 @@
 <?php 
-session_start();
-include_once 'connect.php';
+  session_start();
 
-if(isset($_SESSION['user'])!="")
-{
- session_destroy();
- unset($_SESSION['user']);
- header("Location: index.php");
-}
+  include("Location: ../files/conn-config.php");
 
-if(isset($_POST['login-btn']))
-{
- $username = mysql_real_escape_string($_POST['username']);
- $password = mysql_real_escape_string($_POST['password']);
- if($res=mysql_query("SELECT * FROM admin WHERE email='$username' AND status='active'"))
- {
-	$row=mysql_fetch_array($res);
-	if($row['password'] == md5($password))
-	 {
-		 if($row['password'] == md5($row['last_name']))
-		 {
-			$_SESSION['user'] = $row['admin_id'];
-			header("Location: dashboard.php"); 
-		 }else
-		 {
-			$_SESSION['user'] = $row['admin_id'];
-			header("Location: dashboard.php");
-		 }
-	 }
-	else	
-	{
-	?>
-		<script>alert('Incorrect username or password');</script>
-	<?php
-	}
- }
- else	
-	{
-	?>
-		<script>alert('User does not exist.');</script>
-	<?php
-	}
-}
+  if(isset($_SESSION['user'])!="")
+  {
+   session_destroy();
+   unset($_SESSION['user']);
+   header("Location: index.php");
+  }
+
+  if(isset($_POST['login-btn']))
+  {
+   $username = mysql_real_escape_string($_POST['username']);
+   $password = mysql_real_escape_string($_POST['password']);
+
+   if($res=mysql_query("SELECT * FROM admin WHERE first_name ='$username' AND status='active'"))
+   {
+  	$row=mysql_fetch_array($res);
+  	if($row['password'] == md5($password))
+  	 {
+  		 if($row['password'] == md5($row['last_name']))
+  		 {
+  			$_SESSION['user'] = $row['admin_id'];
+  			header("Location: dashboard.php"); 
+  		 }else
+  		 {
+  			$_SESSION['user'] = $row['admin_id'];
+  			header("Location: dashboard.php");
+  		 }
+  	 }
+  	else	
+  	{
+  	?>
+  		<script>alert('Incorrect username or password');</script>
+  	<?php
+  	}
+   }
+   else	
+  	{
+  	?>
+  		<script>alert('User does not exist.');</script>
+  	<?php
+  	}
+  }
 ?>
 <html>
   <head>

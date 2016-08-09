@@ -1,12 +1,16 @@
 <?php
 	error_reporting(0);
 	session_start();
-	include_once 'connect.php';
-
+	include_once("../files/conn-config.php");
+/* commented out check session for testing
 	if(!isset($_SESSION['user']))
 	{
 	 header("Location: index.php");
 	}
+
+	include("php/DbConnection.php");
+	$dbconnect -> connect($DBuser, $DBpass, $DBurl);
+	$dbconnect -> useDb($Database);*/
 
 	$userinfo = mysql_query("SELECT * FROM admin WHERE admin_id = '".$_SESSION['user']."'");
 	$user = mysql_fetch_assoc($userinfo);

@@ -1,13 +1,11 @@
 <?php
 	error_reporting(0);
 	session_start();
-	include_once 'connect.php';
-	
+	include("../files/conn-config.php");
 	if(!isset($_SESSION['user']))
 	{
 	 header("Location: index.php");
 	}
-
 	$userinfo = mysql_query("SELECT * FROM admin WHERE admin_id = '".$_SESSION['user']."'");
 	$user = mysql_fetch_assoc($userinfo);
 ?>
