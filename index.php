@@ -1,7 +1,8 @@
 <?php 
   session_start();
 
-  include("Location: ../files/conn-config.php");
+  $dbconn = mysql_connect("localhost","ustiicss_cbms","watashiwaJai@2016","ustiicss_cbms");
+  mysql_select_db("ustiicss_cbms");
 
   if(isset($_SESSION['user'])!="")
   {
@@ -15,7 +16,7 @@
    $username = mysql_real_escape_string($_POST['username']);
    $password = mysql_real_escape_string($_POST['password']);
 
-   if($res=mysql_query("SELECT * FROM admin WHERE first_name ='$username' AND status='active'"))
+   if($res=mysql_query("SELECT * FROM admin WHERE first_name ='$username' AND status='active'",$dbconn))
    {
   	$row=mysql_fetch_array($res);
   	if($row['password'] == md5($password))
@@ -23,11 +24,11 @@
   		 if($row['password'] == md5($row['last_name']))
   		 {
   			$_SESSION['user'] = $row['admin_id'];
-  			header("Location: dashboard.php"); 
+  			header("survey.php"); 
   		 }else
   		 {
   			$_SESSION['user'] = $row['admin_id'];
-  			header("Location: dashboard.php");
+  			header("survey.php");
   		 }
   	 }
   	else	

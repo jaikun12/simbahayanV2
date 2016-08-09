@@ -1,18 +1,11 @@
 <?php
 	error_reporting(0);
 	session_start();
-	include_once("../files/conn-config.php");
-/* commented out check session for testing
-	if(!isset($_SESSION['user']))
-	{
-	 header("Location: index.php");
-	}
+	
+	$dbconn = mysql_connect("localhost","ustiicss_cbms","watashiwaJai@2016","ustiicss_cbms");
+ 	 mysql_select_db("ustiicss_cbms");
 
-	include("php/DbConnection.php");
-	$dbconnect -> connect($DBuser, $DBpass, $DBurl);
-	$dbconnect -> useDb($Database);*/
-
-	$userinfo = mysql_query("SELECT * FROM admin WHERE admin_id = '".$_SESSION['user']."'");
+	$userinfo = mysql_query("SELECT * FROM admin WHERE admin_id = '".$_SESSION['user']."';",$dbconn);
 	$user = mysql_fetch_assoc($userinfo);
 
 if(isset($_POST['submit-btn']))
@@ -350,7 +343,7 @@ if(isset($_POST['submit-btn']))
 	
 	if(mysql_query("INSERT INTO simbahayan(region,lalawigan,city,barangay,purok,address,nakapanayam,date_surveyed,start_time,end_time,puna,num_members,simbahayan_head,other_members,om_name,om_age,om_gender,om_relation,om_dahilan,ofw,ofw_name,ofw_relation,ofw_country,ofw_work,isang_magulang,im_name,im_cause,pwd,pwd_name,pwd_cause,pwd_type,pwd_tulong,pinanggalingan,sc_name,sc_id,sc_use,board_passer,bp_name,bp_profession,nagpapagamot,saan_nagpagamot,num_couples,couple_name,family_planning,fp_ways,dating_kasambahay,dk_name,dk_gender,dk_age,death_cause,pagpatay,pagpatay_lalaki,pagpatay_babae,pagnanakaw,pagnanakaw_babae,panggagahasa,panggagahasa_lalaki,panggagahasa_babae,pananakit,pananakit_lalaki,pananakit_babae,iba_crime,iba_crime_lalaki,iba_crime_babae,water_source,water_location,palikuran,sambahayan_status,rental_fee,electricity,electricity_source,consumption_fee,kasangkapan,materials_dingding,materials_bubong,pagsasaka,pagsasaka_salapi,pagsasaka_bagay,paghahayop,paghahayop_salapi,paghahayop_bagay,pangingisda,pangingisda_salapi,pangingisda_bagay,pangangahoy,pangangahoy_salapi,pangangahoy_bagay,pagtitinda,pagtitinda_salapi,pagtitinda_bagay,paggawa,paggawa_salapi,paggawa_bagay,pantao,pantao_salapi,pantao_bagay,transportasyon,transportasyon_salapi,transportasyon_bagay,pagmimina,pagmimina_salapi,pagmimina_bagay,pangkabuhayan,pangkabuhayan_salapi,pangkabuhayan_bagay,katayuan_pamamalagi,lawak_sinasaka,pananim,kagamitang_pangagrikultura,alagang_hayop,buhay_hayop,karne,gatas,itlog,iba_pa,lugar_pangingisda,lawak_fishpond,bilang_fishcage,sukat_fishcage,huling_isda,bangka,kagamitan_pangingisda,pamamahala_basura,kumokolekta_basura,kadalas_pangongolekta,nasalanta,sumalanta,gutom,buwan_gutom,coordinator_id) VALUES ('$region','$lalawigan','$city','$barangay','$purok','$address','$nakapanayam','$date_surveyed','$start_time','$end_time','$puna','$mem_num','$puno','$other_members','$om_name','$om_age','$om_gender','$om_relation','$om_dahilan','$ofw','$ofw_name','$ofw_relation','$ofw_country','$ofw_work','$isang_magulang','$im_name','$im_cause','$pwd','$pwd_name','$pwd_cause','$pwd_type','$pwd_tulong','$pinanggalingan','$sc_name','$sc_id','$sc_use','$board_passer','$bp_name','$bp_profession','$nagpapagamot','$saan_nagpapagamot','$num_couples','$couple_name','$family_planning','$fp_ways','$dating_kasambahay','$dk_name','$dk_gender','$dk_age','$death_cause','$pagpatay','$pagpatay_lalaki','$pagpatay_babae','$pagnanakaw','$pagnanakaw_babae','$panggagahasa','$panggagahasa_lalaki','$panggagahasa_babae','$pananakit','$pananakit_lalaki','$pananakit_babae','$iba_crime','$iba_crime_lalaki','$iba_crime_babae','$water_source','$water_location','$palikuran','$sambahayan_status','$rental_fee','$electricity','$electric_source','$consumption_fee','$devices','$materials_dingding','$materials_bubong','$pagsasaka','$pagsasaka_salapi','$pagsasaka_bagay','$paghahayop','$paghahayop_salapi','$paghahayop_bagay','$pangingisda','$pangingisda_salapi','$pangingisda_bagay','$pangangahoy','$pangangahoy_salapi','$pangangahoy_bagay','$pagtitinda','$pagtitinda_salapi','$pagtitinda_bagay','$paggawa','$paggawa_salapi','$paggawa_bagay','$pantao','$pantao_salapi','$pantao_bagay','$transportasyon','$transportasyon_salapi','$transportasyon_bagay','$pagmimina','$pagmimina_salapi','$pagmimina_bagay','$pangkabuhayan','$pangkabuhayan_salapi','$pangkabuhayan_bagay','$katayuan_pamamalagi','$lawak_sinasaka','$pananim','$kagamitang_pangagrikultura','$alagang_hayop','$buhay_hayop','$karne','$gatas','$itlog','$iba_pa','$lugar_pangingisda','$lawak_fishpond','$bilang_fishcage','$sukat_fishcage','$huling_isda','$bangka','$kagamitan_pangingisda','$pamamahala_basura','$kumokolekta_basura','$kadalas_pangongolekta','$nasalanta','$sumalanta','$gutom','$buwan_gutom','".$user['admin_id']."')"))
 	{
-		$id = mysql_query("SELECT * FROM simbahayan ORDER BY simbahayan_id DESC LIMIT 1");
+		$id = mysql_query("SELECT * FROM simbahayan ORDER BY simbahayan_id DESC LIMIT 1",$dbconn);
 		$simbahayan_id = mysql_fetch_assoc($id);
 		$cnt = count($_POST['name']);
 		$var = $_POST['name'];
