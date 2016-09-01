@@ -8,8 +8,8 @@
 	$dbconn = mysql_connect($server,$username,$password);
  	$select_db = mysql_query("UST DATABASE ustiicss_cbms;");
 
-//	$userinfo = mysql_query("SELECT * FROM admin WHERE admin_id = '".$_SESSION['user']."';");
-//	$user = mysql_fetch_assoc($userinfo);
+	$userinfo = mysql_query("SELECT * FROM admin WHERE admin_id = '".$_SESSION['user']."';");
+	$user = mysql_fetch_assoc($userinfo);
 
 if(isset($_POST['submit-btn']))
 {
@@ -469,15 +469,15 @@ if(isset($_POST['submit-btn']))
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <img src="dist/img/avatar5.png" class="user-image" alt="User Image">
-                  <span class="hidden-xs"><?php echo "Account of Sir Balmeo.";//echo $user['last_name'].", ".$user['first_name'];?></span>
+                  <span class="hidden-xs"><?php echo $user['last_name'].", ".$user['first_name'];?></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
                     <img src="dist/img/avatar5.png" class="img-circle" alt="User Image">
                     <p>
-                      <?php echo 'Balmeo, Krisnamonte';//$user['last_name'].", ".$user['first_name']." - ".$user['position']?>
-                      <small>Account Active 9/1/2016</small>
+                      <?php echo $user['last_name'].", ".$user['first_name']." - ".$user['position']?>
+                      <small>Member since March 2016</small>
                     </p>
                   </li>
                   <!-- Menu Body -->
@@ -581,7 +581,7 @@ if(isset($_POST['submit-btn']))
         <section class="content-header">
           <h1>
             Survey
-            <small>Version 1.0 BETA READ: Survey is the current working-only page of this system. The team is currently working on the project subject to overhaul of all the codes.</small>
+            <small>Version 1.0</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -603,34 +603,75 @@ if(isset($_POST['submit-btn']))
 					   <div class="col-md-6">
 						<div class="form-group">
 							<label>Region</label>
-							<input type="text" class="form-control" name="region" id="lsname" placeholder="" style="width: 100%;">
+							<?php
+								$regionlist = mysql_query("SELECT * FROM regions");
+								echo "<select name='region' class='form-control select2' style='width: 100%;'>";
+									while($regions = mysql_fetch_array($regionlist))
+									{
+									echo "<option value='". $regions['region_id'] ."'>" . $regions['region_name'] . "</option>"; 
+									}
+								echo "</select>";
+							?>
 						</div>
 						 <div class="form-group">
 							  <label for="members">Lalawigan:</label>
-							<input type="text" class="form-control" name="lalawigan" id="lsname" placeholder="" style="width: 100%;">
+							  <?php
+								$lalawiganlist = mysql_query("SELECT * FROM lalawigan ORDER BY name ASC");
+								echo "<select name='lalawigan' class='form-control select2' style='width: 100%;'>";
+									while($province = mysql_fetch_array($lalawiganlist))
+									{
+									echo "<option value='". $province['id'] ."'>" . $province['name'] . "</option>"; 
+									}
+								echo "</select>";
+								?>
+							</div>
 					   </div>
 					   <div class="col-md-6">
 						<div class="form-group">
 							<label>Lungsod/Bayan:</label>
-							<input type="text" class="form-control" name="city" id="lsname" placeholder="" style="width: 100%;">
+							<?php
+								$citylist = mysql_query("SELECT * FROM city ORDER BY city_name ASC");
+								echo "<select name='city' class='form-control select2' style='width: 100%;'>";
+									while($cities = mysql_fetch_array($citylist))
+									{
+									echo "<option value='". $cities['city_id'] ."'>" . $cities['city_name'] . "</option>"; 
+									}
+								echo "</select>";
+							?>
 						</div><!-- /.form-group -->
 					   </div>
 					   <div class="col-md-6">
 						<div class="form-group">
 							<label>Barangay</label>
-							<input type="text" class="form-control" name="barangay" id="lsname" placeholder="" style="width: 100%;">
+							<?php
+								$barangaylist = mysql_query("SELECT * FROM barangay");
+								echo "<select name='barangay' class='form-control select2' style='width: 100%;'>";
+									while($barangays = mysql_fetch_array($barangaylist))
+									{
+									echo "<option value='". $barangays['barangay_id'] ."'>" . $barangays['barangay_name'] . "</option>"; 
+									}
+								echo "</select>";
+							?>
 						</div><!-- /.form-group -->
 					   </div>
 					   <div class="col-md-6">
 						<div class="form-group">
 							<label>Purok</label>
-							<input type="text" class="form-control" name="purok" id="lsname" placeholder="" style="width: 100%;">
+							<?php
+								$puroklist = mysql_query("SELECT * FROM purok");
+								echo "<select name='purok' class='form-control select2' style='width: 100%;'>";
+									while($puroks = mysql_fetch_array($puroklist))
+									{
+									echo "<option value='". $puroks['purok_id'] ."'>" . $puroks['purok_name'] . "</option>"; 
+									}
+								echo "</select>";
+							?>
 						</div><!-- /.form-group -->
 					   </div>
 					   
 					   <div class="col-md-6">
 					   <label>Numerong Pagkakakilanlan ng Sambahayan:</label>
-							<div class="form-group">
+						 <div class="form-group">
 							  <input type="text" class="form-control" name="mem_num" id="lsname" placeholder="" style="width: 100%;">
 							</div>
 					   </div>

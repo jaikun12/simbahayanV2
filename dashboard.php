@@ -9,6 +9,7 @@
 	$userinfo = mysql_query("SELECT * FROM admin WHERE admin_id = '".$_SESSION['user']."'",$dbconn);
 	$user = mysql_fetch_assoc($userinfo);
 ?>
+<!DOCTYPE HTML>
 <html>
   <head>
     <meta charset="utf-8">
